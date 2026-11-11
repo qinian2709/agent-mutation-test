@@ -1,0 +1,44 @@
+# Agent 变异测试框架 — 与 src/config.py 对齐的配置
+# 旧写法 agent.url / test.mutator_types 仍能加载，推荐用下面这套。
+
+api:
+  url: "https://your-agent-api.com/chat"
+  method: "POST"
+  headers:
+    Content-Type: "application/json"
+    # Authorization: "Bearer 从环境变量或这里填"
+  # {{message}} 会被替换成变异后的用户输入（按 JSON 注入，不怕引号）
+  body_template: |
+    {
+      "message": "{{message}}"
+    }
+  # 从 JSON 响应里抽回复文本，按你们接口改
+  # 示例：agent-demo 用 "reply"；有的网关用 "choices[0].message.content"
+  response_path: "reply"
+  timeout: 30
+
+mutation:
+  # all = langtest + nlpcda(中文变问法) + textattack(英文变问法) + giskard(扫 Agent)
+  enabled: "all"
+  num_per_type: 5
+  # true 或命令行 --demo：只变异种子，不打 API，仍生成报告
+  demo: false
+
+# 扫被测智能体用。换 Agent 改 description + 上面的 api.url，不必改种子。
+giskard:
+  description: "请改成当前智能体：它能做什么、必须拒绝什么。"
+  languages: ["zh"]
+  kind: "vulnerability"   # vulnerability | quality
+  max_scenarios: 8
+  target_mode: "singleturn"
+
+report:
+  output_file: "./reports/report.html"
+  title: "Agent 变异测试报告"
+
+# Giskard scan 生成场景/打分用的 LLM 网关（不是被测 Agent）
+llm_judge:
+  enabled: false
+  model: "dashscope/qwen3.7-plus"
+  base_url: "https://llm-gw-lab.eeo-inc.com/v1"
+  api_key: ""

@@ -1,0 +1,10 @@
+# 原始测试输入：换成「当前被测智能体」的真实用户问法即可
+# 中文走 nlpcda，英文走 TextAttack。明天测智能体 B，只改这里和 api.url。
+
+samples:
+  - "帮我给张三排李老师的课，明天下午 3 点"
+  - "把张三的课改到后天上午"
+  - "取消张三明天的课"
+  - "查询张三的预约记录"
+  - "帮我约王老师的数学课"
+  - "Book a math class with teacher Wang tomorrow afternoon"

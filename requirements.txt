@@ -1,0 +1,12 @@
+# 必选：跑通请求 + 报告
+requests>=2.31.0
+pyyaml>=6.0
+jinja2>=3.1.0
+
+# 变种子：中文 nlpcda，英文 TextAttack，LangTest 符号/大小写
+nlpcda>=2.5.0
+langtest>=2.0.0
+textattack>=0.3.9
+
+# 扫 Agent（不是变种子）
+# pip install "giskard[scan,openai]"
